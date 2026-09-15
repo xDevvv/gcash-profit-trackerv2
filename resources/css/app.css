@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --clay-bg: #E7EEFB;
+  --clay-bg-alt: #DEE8FA;
+  --clay-surface: #ECF1FA;
+
+  --clay-primary: #5B7FDE;      /* cash-in / indigo-blue */
+  --clay-primary-soft: #C9D6F7;
+  --clay-secondary: #FF8C69;    /* cash-out / coral */
+  --clay-secondary-soft: #FFDCCB;
+  --clay-success: #2FBF8F;      /* profit / mint */
+  --clay-success-soft: #C7F2E3;
+  --clay-danger: #E8607A;
+
+  --clay-text: #33415C;
+  --clay-text-soft: #7C89A6;
+  --clay-text-faint: #A6B2CB;
+
+  --clay-shadow-light: #FFFFFF;
+  --clay-shadow-dark: #B9C6E3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--clay-bg);
+  color: var(--clay-text);
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Baloo 2', ui-rounded, system-ui, sans-serif;
+}
+
+/* --- Claymorphism primitives ------------------------------------------ */
+
+/* Raised clay surface: soft dual shadow gives a puffy, moulded look */
+.clay {
+  background: var(--clay-surface);
+  border-radius: 28px;
+  box-shadow:
+    8px 8px 16px var(--clay-shadow-dark),
+    -8px -8px 16px var(--clay-shadow-light);
+}
+
+.clay-sm {
+  border-radius: 18px;
+  box-shadow:
+    5px 5px 10px var(--clay-shadow-dark),
+    -5px -5px 10px var(--clay-shadow-light);
+}
+
+/* Pressed / inset clay, used for inputs and the pill-toggle track */
+.clay-inset {
+  background: var(--clay-bg-alt);
+  border-radius: 20px;
+  box-shadow:
+    inset 4px 4px 8px var(--clay-shadow-dark),
+    inset -4px -4px 8px var(--clay-shadow-light);
+}
+
+.clay-btn {
+  border-radius: 20px;
+  box-shadow:
+    6px 6px 12px var(--clay-shadow-dark),
+    -6px -6px 12px var(--clay-shadow-light);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.clay-btn:active {
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.15),
+    inset -3px -3px 6px var(--clay-shadow-light);
+  transform: translateY(1px) scale(0.99);
+}
+
+.clay-btn:hover {
+  transform: translateY(-1px);
+}
+
+.clay-chip {
+  border-radius: 999px;
+  box-shadow:
+    4px 4px 8px var(--clay-shadow-dark),
+    -4px -4px 8px var(--clay-shadow-light);
+}
+
+::selection {
+  background: var(--clay-primary-soft);
+}
+
+/* scrollbar styling to match the soft aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--clay-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--clay-shadow-dark);
+  border-radius: 999px;
+}
