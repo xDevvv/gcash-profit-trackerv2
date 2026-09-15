@@ -39,11 +39,12 @@ class DashboardController extends Controller
             ->groupBy('transaction_date')
             ->orderBy('transaction_date')
             ->get()
-            ->keyBy(fn ($row) => $row->date->toDateString());
+            ->keyBy(fn ($row) => $row->date);
 
         $trend = collect(range(0, 13))->map(function ($i) use ($last14Days) {
             $date = now()->subDays(13 - $i)->toDateString();
             $row = $last14Days->get($date);
+
             return [
                 'date' => $date,
                 'profit' => $row ? (float) $row->profit : 0.0,
@@ -52,7 +53,7 @@ class DashboardController extends Controller
         });
 
         // Monthly totals for the last 6 months.
-        // Grouped in PHP (rather than a DB-specific date-format function) so this
+        // Grouped in PHP (rather than a DB-specific date-format function) so this$row
         // works the same on SQLite, MySQL, or Postgres without changes.
         $rangeStart = now()->subMonths(5)->startOfMonth()->toDateString();
         $monthlyRows = Transaction::where('transaction_date', '>=', $rangeStart)
@@ -64,6 +65,7 @@ class DashboardController extends Controller
             $month = now()->subMonths(5 - $i);
             $key = $month->format('Y-m');
             $rows = $monthlyRows->get($key);
+
             return [
                 'month' => $month->format('M'),
                 'profit' => $rows ? (float) $rows->sum('fee') : 0.0,
