@@ -110,7 +110,7 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
         </div>
         <div>
           <label className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-clay-textSoft">
-            Notes (optional)
+            Notes
           </label>
           <input
             type="text"
