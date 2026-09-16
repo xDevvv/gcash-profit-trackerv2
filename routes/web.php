@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FeeTierController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransferFeeController;
 use Illuminate\Support\Facades\Route;
 
 // If you install Laravel Breeze/auth scaffolding, wrap these in the
@@ -17,7 +17,7 @@ Route::put('/transactions/{transaction}', [TransactionController::class, 'update
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
 Route::get('/transactions/preview-fee', [TransactionController::class, 'previewFee'])->name('transactions.previewFee');
 
-Route::get('/settings/fee-tiers', [FeeTierController::class, 'index'])->name('fee-tiers.index');
-Route::post('/settings/fee-tiers', [FeeTierController::class, 'store'])->name('fee-tiers.store');
-Route::put('/settings/fee-tiers/{feeTier}', [FeeTierController::class, 'update'])->name('fee-tiers.update');
-Route::delete('/settings/fee-tiers/{feeTier}', [FeeTierController::class, 'destroy'])->name('fee-tiers.destroy');
+Route::get('/settings/fee-tiers', [TransferFeeController::class, 'index'])->name('transfer-fee.index');
+Route::post('/settings/fee-tiers', [TransferFeeController::class, 'store'])->name('transfer-fee.store');
+Route::put('/settings/fee-tiers/{transferFee}', [TransferFeeController::class, 'update'])->name('transfer-fee.update');
+Route::delete('/settings/fee-tiers/{transferFee}', [TransferFeeController::class, 'destroy'])->name('transfer-fee.destroy');
