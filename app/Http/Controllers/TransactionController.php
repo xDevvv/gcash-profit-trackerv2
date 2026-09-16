@@ -48,7 +48,7 @@ class TransactionController extends Controller
             'notes' => 'nullable|string|max:255',
         ]);
 
-        $fee = FeeCalculator::calculate((float) $validated['amount']);
+        $fee = FeeCalculator::calculate((float) $validated['amount'], $validated['type']);
 
         Transaction::create([
             'type' => $validated['type'],
@@ -91,7 +91,7 @@ class TransactionController extends Controller
     }
 
     /**
-     * Lightweight endpoint the frontend can call to preview the fee
+     * Lightweight endpoint the frontend can call to preview the s
      * for an amount before submitting the form.
      */
     public function previewFee(Request $request)
@@ -99,7 +99,7 @@ class TransactionController extends Controller
         $amount = (float) $request->query('amount', 0);
 
         return response()->json([
-            'fee' => FeeCalculator::calculate($amount),
+            'fee' => FeeCalculator::calculate($amount, $transactionType),
         ]);
     }
 }
