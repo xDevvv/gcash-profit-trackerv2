@@ -1,4 +1,4 @@
-export type TransactionType = 'cash_in' | 'cash_out';
+export type TransactionType = 'cash_in' | 'cash_out' | 'k-load' | 'load';
 
 export interface Transaction {
   id: number;
@@ -11,7 +11,7 @@ export interface Transaction {
   updated_at: string;
 }
 
-export interface FeeTier {
+export interface TransferFee {
   id: number;
   min_amount: number;
   max_amount: number | null;
@@ -48,6 +48,6 @@ export interface TransactionsIndexProps {
   summary: { count: number; profit: number; volume: number };
 }
 
-export interface FeeTiersPageProps {
-  tiers: FeeTier[];
+export interface TransferFeePageProps {
+  tiers: TransferFee[];
 }
