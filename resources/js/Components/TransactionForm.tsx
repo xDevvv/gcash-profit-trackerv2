@@ -20,14 +20,17 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
 
   // Live fee preview as the amount changes
   useEffect(() => {
+    console.log(data.type);
     const amount = parseFloat(data.amount);
     if (!amount || amount <= 0) {
       setPreviewFee(null);
       return;
     }
+    console.log('Fetching fee preview for amount:', amount);
+
     const timeout = setTimeout(() => {
       axios
-        .get('/transactions/preview-fee', { params: { amount } })
+        .get('/transactions/preview-fee', { params: { amount, type: data.type } })
         .then((res) => setPreviewFee(res.data.fee))
         .catch(() => setPreviewFee(null));
     }, 250);
@@ -58,8 +61,8 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
       </div>
 
       {/* Signature element: puffy segmented pill toggle for Cash In / Cash Out */}
-      <div className="clay-inset flex gap-1 p-1.5">
-        {(['cash_in', 'cash_out'] as TransactionType[]).map((type) => {
+      <div className="clay-inset grid gap-1 p-1.5">
+        {(['cash_in', 'cash_out', 'k-load', 'load'] as TransactionType[]).map((type) => {
           const active = data.type === type;
           return (
             <button
@@ -68,13 +71,13 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
               onClick={() => setData('type', type)}
               className={`flex-1 rounded-2xl py-2.5 text-sm font-bold transition-all ${
                 active
-                  ? type === 'cash_in'
+                  ? type === 'cash_in' || type === 'cash_out'
                     ? 'clay-btn bg-clay-primary text-white'
                     : 'clay-btn bg-clay-secondary text-white'
                   : 'text-clay-textSoft'
               }`}
             >
-              {type === 'cash_in' ? '↓ Cash In' : '↑ Cash Out'}
+              {type === 'cash_in' ? '↓ Cash In' : type === 'cash_out' ? '↑ Cash Out' : type === 'k-load' ? 'K-Load' : 'Load'}
             </button>
           );
         })}
