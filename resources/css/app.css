@@ -86,6 +86,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 .clay-chip {
+
   border-radius: 999px;
   box-shadow:
     4px 4px 8px var(--clay-shadow-dark),
