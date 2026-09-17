@@ -13,8 +13,8 @@ class TransferFeeController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Settings/TransferFees', [
-            'tiers' => TransferFee::orderBy('sort_order')->orderBy('min_amount')->get(),
+        return Inertia::render('Fees/TransferFees', [
+            'fees' => TransferFee::orderBy('sort_order')->orderBy('min_amount')->get(),
         ]);
     }
 
@@ -53,9 +53,10 @@ class TransferFeeController extends Controller
         return back()->with('success', 'Transfer Fee updated.');
     }
 
-    public function destroy(TransferFee $TransferFee): RedirectResponse
+    public function destroy(TransferFee $transferFee): RedirectResponse
     {
-        $TransferFee->delete();
+
+        $transferFee->delete();
 
         FeeCalculator::forgetCache();
 

@@ -97,6 +97,7 @@ class TransactionController extends Controller
     public function previewFee(Request $request)
     {
         $amount = (float) $request->query('amount', 0);
+        $transactionType = $request->query('type', 'cash_in');
 
         return response()->json([
             'fee' => FeeCalculator::calculate($amount, $transactionType),
