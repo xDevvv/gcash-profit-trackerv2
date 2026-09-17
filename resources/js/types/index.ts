@@ -19,6 +19,17 @@ export interface TransferFee {
   sort_order: number;
 }
 
+export interface KLoadFee {
+  id: number;
+  amount: number;
+  fee: string;
+  sort_order: number;
+}
+
+export interface LoadFee extends TransferFee {
+  // Inherits min_amount, max_amount, fee, sort_order
+}
+
 export interface Paginated<T> {
   data: T[];
   current_page: number;
@@ -49,5 +60,15 @@ export interface TransactionsIndexProps {
 }
 
 export interface TransferFeePageProps {
-  tiers: TransferFee[];
+  fees: TransferFee[];
 }
+
+export interface KLoadFeePageProps {
+  fees: KLoadFee[];
+}
+
+export interface LoadFeePageProps {
+  fees: LoadFee[];
+}
+
+
