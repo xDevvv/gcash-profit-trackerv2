@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\KLoadFee;
+use App\Models\LoadFee;
 use App\Models\TransferFee;
 use Illuminate\Support\Facades\Cache;
 
@@ -19,17 +21,17 @@ class FeeCalculator
                 return 0;
             }
 
-            $tiers = self::tiers();
+            $fees = self::transferFees();
 
-            foreach ($tiers as $tier) {
-                $min = (float) $tier['min_amount'];
+            foreach ($fees as $fee) {
+                $min = (float) $fee['min_amount'];
 
-                $max = $tier['max_amount'] === null
+                $max = $fee['max_amount'] === null
                     ? null
-                    : (float) $tier['max_amount'];
+                    : (float) $fee['max_amount'];
 
                 if ($amount >= $min && ($max === null || $amount <= $max)) {
-                    return (float) $tier['fee'];
+                    return (float) $fee['fee'];
                 }
             }
 
@@ -48,20 +50,76 @@ class FeeCalculator
         }
 
         if ($type === 'k-load') {
-            return 0;
+
+            if ($amount <= 0) {
+                return 0;
+            }
+
+            $fees = self::kLoadFees();
+
+            foreach ($fees as $fee) {
+                $min = (float) $fee['amount'];
+
+                if ($amount === $min) {
+                    return (float) $fee['fee'];
+                }
+            }
         }
 
         if ($type === 'load') {
-            return 0;
-        }
+            if ($amount <= 0) {
+                return 0;
+            }
 
-        return 0;
+            $fees = self::LoadFees();
+
+            foreach ($fees as $fee) {
+                $min = (float) $fee['min_amount'];
+
+                $max = $fee['max_amount'] === null
+                    ? null
+                    : (float) $fee['max_amount'];
+
+                if ($amount >= $min && ($max === null || $amount <= $max)) {
+                    return (float) $fee['fee'];
+                }
+            }
+        }
     }
 
-    protected static function tiers(): array
+    protected static function transferFees(): array
     {
-        return Cache::remember('fee_tiers_sorted', 60, function () {
+        return Cache::remember('transfer_fee_sorted', 60, function () {
             return TransferFee::orderBy('sort_order')
+                ->orderBy('min_amount')
+                ->get()
+                ->map(fn ($tier) => [
+                    'min_amount' => $tier->min_amount,
+                    'max_amount' => $tier->max_amount,
+                    'fee' => $tier->fee,
+                ])
+                ->toArray();
+        });
+    }
+
+    protected static function kLoadFees(): array
+    {
+        return Cache::remember('kload_fee_sorted', 60, function () {
+            return KLoadFee::orderBy('sort_order')
+                ->orderBy('amount')
+                ->get()
+                ->map(fn ($tier) => [
+                    'amount' => $tier->amount,
+                    'fee' => $tier->fee,
+                ])
+                ->toArray();
+        });
+    }
+
+    protected static function LoadFees(): array
+    {
+        return Cache::remember('load_fee_sorted', 60, function () {
+            return LoadFee::orderBy('sort_order')
                 ->orderBy('min_amount')
                 ->get()
                 ->map(fn ($tier) => [
@@ -75,6 +133,8 @@ class FeeCalculator
 
     public static function forgetCache(): void
     {
-        Cache::forget('fee_tiers_sorted');
+        Cache::forget('transfer_fee_sorted');
+        Cache::forget('kload_fee_sorted');
+        Cache::forget('load_fee_sorted');
     }
 }
