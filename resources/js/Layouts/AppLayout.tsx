@@ -2,9 +2,11 @@ import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode } from 'react';
 
 const nav = [
-  { href: '/', label: 'Dashboard', icon: '🏠', routeName: 'dashboard' },
-  { href: '/transactions', label: 'Transactions', icon: '🧾', routeName: 'transactions.index' },
-  { href: '/settings/fee-tiers', label: 'Cash in / Cash out Fee', icon: '⚙️', routeName: 'fee-tiers.index' },
+    { href: '/', label: 'Dashboard', icon: '🏠', routeName: 'dashboard' },
+    { href: '/transactions', label: 'Transactions', icon: '🧾', routeName: 'transactions.index' },
+    { href: '/fee/transfer', label: 'Cash in / Cash out', icon: '💸', routeName: 'transfer.index' },
+    { href: '/fee/kload', label: 'K-Load', icon: '⚡', routeName: 'kload.index' },
+    { href: '/fee/load', label: 'Load', icon: '📱', routeName: 'load.index' },
 ];
 
 export default function AppLayout({
