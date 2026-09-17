@@ -20,13 +20,11 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
 
   // Live fee preview as the amount changes
   useEffect(() => {
-    console.log(data.type);
     const amount = parseFloat(data.amount);
     if (!amount || amount <= 0) {
       setPreviewFee(null);
       return;
     }
-    console.log('Fetching fee preview for amount:', amount);
 
     const timeout = setTimeout(() => {
       axios
@@ -35,7 +33,7 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
         .catch(() => setPreviewFee(null));
     }, 250);
     return () => clearTimeout(timeout);
-  }, [data.amount]);
+  }, [data.amount, data.type]);
 
   function submit(e: FormEvent) {
     e.preventDefault();
@@ -50,12 +48,13 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
   }
 
   return (
-    <form onSubmit={submit} className="clay flex flex-col gap-5 p-6">
-      <div className="flex items-center justify-between">
+    <form onSubmit={submit} className="clay grid flex-col gap-5 p-6">
+      <div className="grid items-center justify-between">
         <h3 className="font-display text-lg font-bold">Record a transaction</h3>
         {previewFee !== null && (
+
           <span className="clay-chip bg-clay-successSoft px-4 py-1.5 text-sm font-bold text-clay-success">
-            Fee: ₱{previewFee.toFixed(2)}
+            <p>Fee: ₱{previewFee.toFixed(2)}</p>
           </span>
         )}
       </div>
