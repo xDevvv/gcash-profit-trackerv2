@@ -1,4 +1,4 @@
-export type TransactionType = 'cash_in' | 'cash_out' | 'k-load' | 'load';
+export type TransactionType = 'cash_in' | 'cash_out' | 'k_load' | 'load' | 'debt';
 
 export interface Transaction {
   id: number;
