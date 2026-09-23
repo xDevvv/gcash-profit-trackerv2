@@ -40,20 +40,6 @@ export default function Dashboard({ today, month, trend, monthlyTrend, recentTra
               accent="primary"
               icon="📈"
             />
-            <StatCard
-              label="Cash In Today"
-              value={peso(today.cashIn.profit)}
-              sublabel={`${today.cashIn.count} txns · ₱${today.cashIn.volume.toLocaleString()} moved`}
-              accent="primary"
-              icon="↓"
-            />
-            <StatCard
-              label="Cash Out Today"
-              value={peso(today.cashOut.profit)}
-              sublabel={`${today.cashOut.count} txns · ₱${today.cashOut.volume.toLocaleString()} moved`}
-              accent="secondary"
-              icon="↑"
-            />
           </div>
 
           <div className="clay p-6">
@@ -64,11 +50,11 @@ export default function Dashboard({ today, month, trend, monthlyTrend, recentTra
               </span>
             </div>
             <ClayBarChart
-              accent="primary"
-              bars={trend.map((t) => ({
-                label: new Date(t.date).toLocaleDateString('en-PH', { day: 'numeric' }),
-                value: t.profit,
-              }))}
+                accent="primary"
+                bars={trend.map((t) => ({
+                    label: new Date(`${t.date}T00:00:00`).toLocaleDateString('en-PH', { day: 'numeric' }),
+                    value: Number(t.profit) || 0,
+                }))}
             />
           </div>
 
@@ -81,6 +67,7 @@ export default function Dashboard({ today, month, trend, monthlyTrend, recentTra
             </div>
             <ClayBarChart accent="success" bars={monthlyTrend.map((m) => ({ label: m.month, value: m.profit }))} />
           </div>
+
 
           <div className="clay p-6">
             <div className="mb-4 flex items-center justify-between">
