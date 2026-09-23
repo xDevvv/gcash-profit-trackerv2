@@ -41,8 +41,9 @@ class TransactionController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+
         $validated = $request->validate([
-            'type' => 'required|in:cash_in,cash_out',
+            'type' => 'required|in:cash_in,cash_out,k_load,load',
             'amount' => 'required|numeric|min:1',
             'transaction_date' => 'nullable|date',
             'notes' => 'nullable|string|max:255',

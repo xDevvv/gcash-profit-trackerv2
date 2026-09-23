@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -32,14 +33,14 @@ class DashboardController extends Controller
         // Last 14 days of profit, for the trend chart
         $last14Days = Transaction::betweenDates(now()->subDays(13)->toDateString(), $today)
             ->select(
-                DB::raw('transaction_date as date'),
+                DB::raw('DATE(transaction_date) as date'),
                 DB::raw('COALESCE(SUM(fee),0) as profit'),
                 DB::raw('COUNT(*) as count')
             )
-            ->groupBy('transaction_date')
-            ->orderBy('transaction_date')
+            ->groupBy(DB::raw('DATE(transaction_date)'))
+            ->orderBy(DB::raw('DATE(transaction_date)'))
             ->get()
-            ->keyBy(fn ($row) => $row->date);
+            ->keyBy(fn ($row) => Carbon::parse($row->date)->toDateString());
 
         $trend = collect(range(0, 13))->map(function ($i) use ($last14Days) {
             $date = now()->subDays(13 - $i)->toDateString();
