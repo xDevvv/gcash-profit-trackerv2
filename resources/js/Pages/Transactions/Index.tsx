@@ -149,10 +149,24 @@ function TransactionRow({
       <td className="px-4 py-3">
         <span
           className={`clay-chip px-3 py-1 text-xs font-bold text-white ${
-            t.type === 'cash_in' ? 'bg-clay-primary' : 'bg-clay-secondary'
+            t.type === 'cash_in'
+            ? 'bg-clay-primary'
+            : t.type === 'k_load'
+            ? 'bg-emerald-600'
+            : t.type === 'load'
+            ? 'bg-sky-500'
+            : t.type === 'debt'
+            ? 'bg-rose-600'
+            : 'bg-clay-secondary'
+
           }`}
         >
-          {t.type === 'cash_in' ? 'Cash In' : 'Cash Out'}
+          {
+          t.type === 'cash_in' ? 'Cash In' :
+          t.type === 'cash_out' ? 'Cash Out' :
+          t.type === 'k_load' ? 'K-Load' :
+          t.type === 'load' ? 'Load' :
+          t.type === 'debt' ? 'Debt' : t.type}
         </span>
       </td>
       <td className="px-4 py-3 font-semibold">{peso(parseFloat(t.amount))}</td>
