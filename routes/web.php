@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DebtController;
 use App\Http\Controllers\KloadFeeController;
 use App\Http\Controllers\LoadFeeController;
 use App\Http\Controllers\TransactionController;
@@ -36,3 +37,11 @@ Route::get('/fee/load', [LoadFeeController::class, 'index'])->name('load.index')
 Route::post('/fee/load', [LoadFeeController::class, 'store'])->name('load.store');
 Route::put('/fee/load/{loadFee}', [LoadFeeController::class, 'update'])->name('load.update');
 Route::delete('/fee/load/{loadFee}', [LoadFeeController::class, 'destroy'])->name('load.destroy');
+
+// Debt Routes
+Route::get('/debt', [DebtController::class, 'index'])->name('debt.index');
+Route::post('/debt', [DebtController::class, 'store'])->name('debt.store');
+Route::put('/debt/{debt}', [DebtController::class, 'update'])->name('debt.update');
+Route::delete('/debt/{debt}', [DebtController::class, 'destroy'])->name('debt.destroy');
+
+Route::post('/debt/{debt}/pay', [DebtController::class, 'pay'])->name('debt.pay');
