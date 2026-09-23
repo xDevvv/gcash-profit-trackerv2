@@ -49,7 +49,7 @@ class FeeCalculator
             return 10;
         }
 
-        if ($type === 'k-load') {
+        if ($type === 'k_load') {
 
             if ($amount <= 0) {
                 return 0;
