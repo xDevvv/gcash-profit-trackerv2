@@ -20,6 +20,7 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
 
   // Live fee preview as the amount changes
   useEffect(() => {
+
     const amount = parseFloat(data.amount);
     if (!amount || amount <= 0) {
       setPreviewFee(null);
@@ -61,7 +62,7 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
 
       {/* Signature element: puffy segmented pill toggle for Cash In / Cash Out */}
       <div className="clay-inset grid gap-1 p-1.5">
-        {(['cash_in', 'cash_out', 'k-load', 'load'] as TransactionType[]).map((type) => {
+        {(['cash_in', 'cash_out', 'k_load', 'load'] as TransactionType[]).map((type) => {
           const active = data.type === type;
           return (
             <button
@@ -76,7 +77,7 @@ export default function TransactionForm({ onSuccess }: { onSuccess?: () => void 
                   : 'text-clay-textSoft'
               }`}
             >
-              {type === 'cash_in' ? '↓ Cash In' : type === 'cash_out' ? '↑ Cash Out' : type === 'k-load' ? 'K-Load' : 'Load'}
+              {type === 'cash_in' ? '↓ Cash In' : type === 'cash_out' ? '↑ Cash Out' : type === 'k_load' ? 'K-Load' : 'Load'}
             </button>
           );
         })}
