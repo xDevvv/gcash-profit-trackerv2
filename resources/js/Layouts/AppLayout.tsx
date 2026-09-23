@@ -7,6 +7,7 @@ const nav = [
     { href: '/fee/transfer', label: 'Cash in / Cash out', icon: '💸', routeName: 'transfer.index' },
     { href: '/fee/kload', label: 'K-Load', icon: '⚡', routeName: 'kload.index' },
     { href: '/fee/load', label: 'Load', icon: '📱', routeName: 'load.index' },
+    { href: '/debt', label: 'Debt', icon: '💰', routeName: 'debt.index' },
 ];
 
 export default function AppLayout({
